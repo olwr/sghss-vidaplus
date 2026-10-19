@@ -1,0 +1,31 @@
+{
+    "recommendations": [
+        "ms-vscode-remote.remote-wsl",
+        "ms-azuretools.vscode-containers",
+        "ms-azuretools.vscode-docker",
+        "redhat.vscode-yaml",
+        "github.vscode-github-actions",
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-debug",
+        "neilbrayfield.php-docblocker",
+        "recca0120.vscode-phpunit",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        "Vue.volar",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "vitest.explorer",
+        "dotenv.dotenv-vscode",
+        "vivaxy.vscode-conventional-commits",
+        "ryanluker.vscode-coverage-gutters",
+        "davidanson.vscode-markdownlint",
+        "shd101wyy.markdown-preview-enhanced"
+    ],
+    "unwantedRecommendations": [
+        "hbenl.vscode-test-explorer",
+        "ms-vscode.test-adapter-converter",
+        "satiromarra.vscode-php-test-explorer-docker",
+        "stylelint.vscode-stylelint"
+    ]
+}

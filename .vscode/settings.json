@@ -1,0 +1,123 @@
+{
+  // ---------- Gerais ----------
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.rulers": [120],
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "docker-compose*.yml": "dockercompose",
+    "*.neon": "yaml"
+  },
+  "dotenv.enableAutocloaking": true,
+  // ---------- PHP ----------
+  // Sem PHP no WSL: a validação nativa do VS Code não tem binário. Intelephense cobre a análise.
+  "php.validate.enable": false,
+  "php.suggest.basic": false,
+  "intelephense.environment.phpVersion": "8.3.0",
+  "intelephense.files.exclude": [
+    "**/.git/**",
+    "**/node_modules/**",
+    "frontend/**",
+    "**/storage/framework/**",
+    "**/bootstrap/cache/**"
+  ],
+  // Quem formata PHP é o Pint (PSR-12), não o Intelephense: evita dois formatadores brigando.
+  "intelephense.format.enable": false,
+  "[php]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+  },
+  // ---------- Testes PHP (recca0120.vscode-phpunit) — [VERIFICAR] nomes das chaves na versão instalada ----------
+  "phpunit.command": "docker compose exec -T api ${php} ${phpunit}",
+  "phpunit.php": "php",
+  "phpunit.phpunit": "vendor/bin/phpunit",
+  "phpunit.paths": {
+    "${workspaceFolder}/backend": "/var/www/html"
+  },
+  // ---------- Front ----------
+  "eslint.workingDirectories": [{ "directory": "frontend", "!cwd": true }],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // Stylelint desabilitada; o validador nativo de CSS não conhece @theme/@custom-variant do Tailwind v4:
+  "stylelint.enable": false,
+  "css.lint.unknownAtRules": "ignore",
+  "tailwindCSS.experimental.configFile": "frontend/src/assets/main.css",
+  // ---------- Banco (sem senha: ela é pedida ao conectar) ----------
+  "sqltools.connections": [
+    {
+      "name": "SGHSS (dev)",
+      "driver": "PostgreSQL",
+      "server": "localhost",
+      "port": 5432,
+      "database": "sghss",
+      "username": "sghss",
+      "askForPassword": true,
+      "previewLimit": 50
+    },
+    {
+      "name": "SGHSS (testes)",
+      "driver": "PostgreSQL",
+      "server": "localhost",
+      "port": 5432,
+      "database": "sghss_test",
+      "username": "sghss",
+      "askForPassword": true,
+      "previewLimit": 50
+    }
+  ],
+  // ---------- Git / commits ----------
+  "conventionalCommits.scopes": [
+    "infra",
+    "shared",
+    "deps",
+    "api",
+    "auth",
+    "seguranca",
+    "auditoria",
+    "lgpd",
+    "pacientes",
+    "profissionais",
+    "unidades",
+    "equipes",
+    "agendamentos",
+    "prontuarios",
+    "receitas",
+    "exames",
+    "telemedicina",
+    "internacoes",
+    "transferencias",
+    "relatorios",
+    "admin",
+    "front",
+    "docs"
+  ],
+  "conventionalCommits.gitmoji": false,
+  // ---------- Cobertura no editor ----------
+  "coverage-gutters.coverageBaseDir": "backend/storage/coverage",
+  "coverage-gutters.coverageFileNames": ["clover.xml"],
+  // ---------- Markdown ----------
+  "[markdown]": {
+    "editor.formatOnSave": false
+  }
+  // markdownlint: regras ficam em .markdownlint.json (a chave "markdownlint.config" está obsoleta)
+}

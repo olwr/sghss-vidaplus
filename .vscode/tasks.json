@@ -1,0 +1,112 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Infra: subir banco, redis, storage e mailpit",
+      "type": "shell",
+      "command": "docker compose up -d db redis storage storage-init mailpit",
+      "problemMatcher": []
+    },
+    {
+      "label": "API: subir (api, worker, scheduler)",
+      "type": "shell",
+      "command": "docker compose up -d api worker scheduler",
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Xdebug: ligar",
+      "type": "shell",
+      "command": "XDEBUG_MODE=debug docker compose up -d api worker scheduler",
+      "problemMatcher": []
+    },
+    {
+      "label": "Xdebug: desligar",
+      "type": "shell",
+      "command": "XDEBUG_MODE=off docker compose up -d api worker scheduler",
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Pint: formatar tudo",
+      "type": "shell",
+      "command": "docker compose exec -T api vendor/bin/pint -v",
+      "problemMatcher": []
+    },
+    {
+      "label": "Pint: formatar arquivo atual",
+      "type": "process",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "docker compose exec -T api vendor/bin/pint \"$(echo '${relativeFile}' | sed 's#^backend/##')\""
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Pint: verificar (como no CI)",
+      "type": "shell",
+      "command": "docker compose exec -T api vendor/bin/pint --test -v",
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Larastan: analisar",
+      "type": "shell",
+      "command": "docker compose exec -T api vendor/bin/phpstan analyse --memory-limit=1G --no-progress",
+      "problemMatcher": []
+    },
+
+    {
+      "label": "PHPUnit: todos",
+      "type": "shell",
+      "command": "docker compose exec -T api php artisan test",
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "PHPUnit: arquivo atual",
+      "type": "process",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "docker compose exec -T api php artisan test \"$(echo '${relativeFile}' | sed 's#^backend/##')\""
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "PHPUnit: cobertura (gera clover para o editor)",
+      "type": "shell",
+      "command": "docker compose exec -T api php vendor/bin/phpunit --coverage-clover=storage/coverage/clover.xml",
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Composer: audit",
+      "type": "shell",
+      "command": "docker compose exec -T api composer audit",
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Qualidade: backend (igual ao CI)",
+      "dependsOn": [
+        "Pint: verificar (como no CI)",
+        "Larastan: analisar",
+        "PHPUnit: todos",
+        "Composer: audit"
+      ],
+      "dependsOrder": "sequence",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Front: qualidade (lint, tipos, testes, build)",
+      "type": "shell",
+      "command": "npm run lint && npm run type-check && npm run test:unit -- --run && npm run build",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "problemMatcher": []
+    }
+  ]
+}
