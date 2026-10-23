@@ -1,0 +1,34 @@
+name: cd-imagens
+on:
+    push:
+        branches: [main]
+        tags: ["v*.*.*"]
+permissions:
+    contents: read
+    packages: write
+jobs:
+    build-push:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                include:
+                    - { nome: api, contexto: backend, alvo: prod }
+                    - { nome: web, contexto: frontend, alvo: prod }
+        steps:
+            - uses: actions/checkout@v7
+            - uses: docker/login-action@v4
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            - uses: docker/metadata-action@v5
+              id: meta
+              with:
+                  images: ghcr.io/${{ github.repository_owner }}/sghss-${{ matrix.nome }}
+            - uses: docker/build-push-action@v6
+              with:
+                  context: ${{ matrix.contexto }}
+                  target: ${{ matrix.alvo }}
+                  push: true
+                  tags: ${{ steps.meta.outputs.tags }}
+                  labels: ${{ steps.meta.outputs.labels }}

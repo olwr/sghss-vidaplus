@@ -1,0 +1,57 @@
+name: backend-ci
+on:
+    pull_request:
+        paths: ["backend/**", ".github/workflows/backend-ci.yml"]
+    push:
+        branches: [main]
+        paths: ["backend/**", ".github/workflows/backend-ci.yml"]
+permissions:
+    contents: read
+concurrency:
+    group: backend-ci-${{ github.ref }}
+    cancel-in-progress: true
+jobs:
+    quality:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: backend
+        services:
+            postgres:
+                image: postgres:18-alpine
+                env:
+                    POSTGRES_DB: sghss_test
+                    POSTGRES_USER: sghss
+                    POSTGRES_PASSWORD: secret
+                ports: ["5432:5432"]
+                options: >-
+                    --health-cmd="pg_isready -U sghss -d sghss_test"
+                    --health-interval=5s --health-timeout=5s --health-retries=10
+            redis:
+                image: redis:8-alpine
+                ports: ["6379:6379"]
+                options: >-
+                    --health-cmd="redis-cli ping" --health-interval=5s
+                    --health-timeout=5s --health-retries=10
+        steps:
+            - uses: actions/checkout@v7
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.3"
+                  extensions: pdo_pgsql, pgsql, redis, intl, bcmath, zip, gd, pcntl
+                  coverage: pcov
+            - name: Cache do Composer
+              uses: actions/cache@v4
+              with:
+                  path: ~/.composer/cache
+                  key: composer-${{ hashFiles('backend/composer.lock') }}
+            - run: composer install --prefer-dist --no-progress --no-interaction
+            - run: cp .env.ci .env && php artisan key:generate
+            - name: Vulnerabilidades em dependências
+              run: composer audit
+            - name: Pint (PSR-12)
+              run: vendor/bin/pint --test
+            - name: Larastan
+              run: vendor/bin/phpstan analyse --memory-limit=1G --no-progress
+            - name: PHPUnit
+              run: php artisan test --coverage --min=60
