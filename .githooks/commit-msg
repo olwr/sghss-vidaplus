@@ -4,6 +4,7 @@ first_line=$(head -n1 "$1")
 if ! [[ "$first_line" =~ $regex ]] && ! [[ "$first_line" =~ ^Merge ]]; then
   echo "Mensagem fora do padrão Conventional Commits:"
   echo "  $first_line"
+  echo "Título: ${#first_line} caracteres no total (a descrição após ':' aceita no máximo 72)."
   echo "Exemplo: feat(pacientes): cadastrar paciente com CPF criptografado"
   exit 1
 fi
