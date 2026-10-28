@@ -9,7 +9,7 @@ x-api: &api
   env_file:
     - path: ./backend/.env
       required: false
-  environment:
+  environment: &api-env
     XDEBUG_MODE: ${XDEBUG_MODE:-off}
   extra_hosts: ["host.docker.internal:host-gateway"] # o container alcança o VS Code (Xdebug, porta 9003)
   depends_on:
@@ -25,11 +25,17 @@ services:
     <<: *api
     command: php artisan horizon
     restart: unless-stopped
+    environment:
+      <<: *api-env
+      LOG_STACK: stderr_json
 
   scheduler:
     <<: *api
     command: php artisan schedule:work
     restart: unless-stopped
+    environment:
+      <<: *api-env
+      LOG_STACK: stderr_json
 
   db:
     image: postgres:18-alpine
