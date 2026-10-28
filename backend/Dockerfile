@@ -1,4 +1,4 @@
-FROM php:8.3-apache-bookworm AS base
+FROM php:8.4-apache-bookworm AS base
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates curl gnupg unzip git libpq-dev libzip-dev libicu-dev \
@@ -29,7 +29,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN pecl install xdebug pcov && docker-php-ext-enable xdebug pcov
 COPY docker/php-dev.ini /usr/local/etc/php/conf.d/zz-dev.ini
 RUN usermod -u ${UID} www-data && groupmod -g ${GID} www-data \
-    && chown -R www-data:www-data /var/run/apache2 /var/log/apache2 /var/lock/apache2
+    && chown -R www-data:www-data /var/run/apache2 /var/log/apache2 /var/lock/apache2 \
+    && mkdir -p /var/www/.composer /var/www/.config \
+    && chown -R www-data:www-data /var/www/.composer /var/www/.config
 USER www-data
 EXPOSE 8080
 

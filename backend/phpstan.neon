@@ -1,0 +1,9 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+parameters:
+    paths: [app, routes, database]
+    level: 5 # subir até 8 ("nível alto" da documentação) de forma gradual
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors: # retirar quando os traits forem usados
+        - identifier: trait.unused
+          path: app/Shared
