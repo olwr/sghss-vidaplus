@@ -4,6 +4,7 @@
 !.env.ci
 node_modules/
 vendor/
+!/backend/lang/vendor/
 storage/*.key
 /backend/storage/logs/*
 /frontend/dist/
