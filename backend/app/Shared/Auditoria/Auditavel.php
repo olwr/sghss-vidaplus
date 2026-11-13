@@ -10,20 +10,27 @@ trait Auditavel
 {
     use LogsActivity;
 
-    /** Campos que nunca entram no log (LGPD: registra-se QUE a entidade mudou, não o valor sensível). */
+    /**
+     * Campos que nunca entram no log (LGPD: registra-se QUE a entidade mudou, não o valor sensível):
+     * tudo que tem cast `encrypted`, tudo que é `hidden` (senha, segredos) e o blind index.
+     *
+     * @return list<string>
+     */
     protected function camposNaoAuditaveis(): array
     {
-        return ['password', 'remember_token', 'cpf_hash'];
+        $criptografados = array_keys(array_filter(
+            $this->getCasts(),
+            fn ($cast) => is_string($cast) && str_starts_with($cast, 'encrypted')
+        ));
+
+        return array_values(array_unique([...$criptografados, ...$this->getHidden(), 'cpf_hash']));
     }
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->logAll()
-            ->logExcept(array_merge(
-                $this->camposNaoAuditaveis(),
-                array_filter(array_keys($this->getAttributes()), fn ($c) => str_ends_with($c, '_criptografado')),
-            ))
+            ->logExcept($this->camposNaoAuditaveis())
             ->logOnlyDirty()
             ->dontLogEmptyChanges()
             ->useLogName(class_basename($this));
@@ -31,9 +38,8 @@ trait Auditavel
 
     public function beforeActivityLogged(Activity $activity, string $eventName): void
     {
-        $activity->properties = collect($activity->properties)->merge([
-            'ip' => request()?->ip(),
-            'user_agent' => substr((string) request()?->userAgent(), 0, 255),
-        ]);
+        // colunas criadas pela migration 2026_11_01_000320 (DBML: activity_log.ip_address / user_agent)
+        $activity->setAttribute('ip_address', request()?->ip());
+        $activity->setAttribute('user_agent', substr((string) request()?->userAgent(), 0, 255));
     }
 }
