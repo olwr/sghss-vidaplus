@@ -9,5 +9,6 @@ return [
         'app_secret' => env('JITSI_APP_SECRET'),
         'antecedencia_min' => 15,
         'tolerancia_apos_fim_min' => 30,
-    ]
+    ],
+    'demo_password' => env('DEMO_PASSWORD'),
 ];
