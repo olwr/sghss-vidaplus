@@ -1,5 +1,6 @@
 includes:
     - vendor/larastan/larastan/extension.neon
+    - phpstan-baseline.neon
 parameters:
     paths: [app, routes, database]
     level: 5 # subir até 8 ("nível alto" da documentação) de forma gradual
