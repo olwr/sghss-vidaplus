@@ -40,6 +40,7 @@ class PerfisPermissoesSeeder extends Seeder
         'paciente' => [
             'pacientes.ver', 'agendamentos.listar', 'agendamentos.ver', 'agendamentos.criar', 'agendamentos.cancelar',
             'prontuarios.ver', 'receitas.ver', 'exames.ver', 'telemedicina.entrar',
+            'profissionais.ver', // 8.1: o paciente escolhe unidade/profissional ao agendar
             'lgpd.exportar', 'lgpd.consentimentos',
         ],
         'secretario' => [

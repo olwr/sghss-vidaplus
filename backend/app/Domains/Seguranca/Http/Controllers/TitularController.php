@@ -3,6 +3,8 @@
 namespace App\Domains\Seguranca\Http\Controllers;
 
 use App\Domains\Pacientes\Http\Requests\UpdatePacienteRequest;
+use App\Domains\Prontuarios\Http\Resources\ExameResource;
+use App\Domains\Prontuarios\Http\Resources\ReceitaResource;
 use App\Domains\Pacientes\Http\Resources\PacienteResource;
 use App\Domains\Pacientes\Services\PacienteService;
 use App\Domains\Seguranca\Http\Requests\ConsentimentoRequest;
@@ -12,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Shared\Http\Resposta;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TitularController extends Controller
 {
@@ -37,6 +40,22 @@ class TitularController extends Controller
             'Content-Disposition' => 'attachment; filename="meus-dados.json"',
             'Cache-Control' => 'no-store, private',
         ]);
+    }
+
+    /** 8.1: as receitas do PRÓPRIO titular (sem passar pelo prontuário; o PDF segue a Policy de receitas). */
+    public function receitas(Request $request): AnonymousResourceCollection
+    {
+        $p = $this->titular->pacienteDe($request->user());
+
+        return ReceitaResource::collection($p->receitas()->with('itens')->orderByDesc('emitida_em')->limit(100)->get());
+    }
+
+    /** 8.1: os exames do PRÓPRIO titular, com a flag `resultado_disponivel` (o arquivo segue a Policy de exames). */
+    public function exames(Request $request): AnonymousResourceCollection
+    {
+        $p = $this->titular->pacienteDe($request->user());
+
+        return ExameResource::collection($p->exames()->with('resultados')->orderByDesc('solicitado_em')->limit(100)->get());
     }
 
     public function consentimentos(Request $request): JsonResponse

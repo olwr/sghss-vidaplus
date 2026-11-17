@@ -20,6 +20,10 @@ class AgendamentoResource extends JsonResource
             'motivo' => $this->motivo,
             'valor' => $this->when(! $request->user()?->hasRole('paciente'), $this->valor),
             'paciente_id' => $this->whenLoaded('paciente', fn () => $this->paciente->uuid),
+            // 8.1: nomes para a tela (evita N chamadas extras do front); data_get() porque as relações são tipadas como Model (Larastan)
+            'paciente_nome' => $this->whenLoaded('paciente', fn () => data_get($this->paciente, 'nome')),
+            'profissional_nome' => $this->whenLoaded('profissional', fn () => data_get($this->profissional, 'usuario.nome')),
+            'unidade_nome' => $this->whenLoaded('unidade', fn () => data_get($this->unidade, 'nome')),
             'profissional_id' => $this->whenLoaded('profissional', fn () => $this->profissional?->uuid),
             'unidade_id' => $this->whenLoaded('unidade', fn () => $this->unidade->uuid),
             'remarcado_de_id' => $this->whenLoaded('remarcadoDe', fn () => $this->remarcadoDe?->uuid),
