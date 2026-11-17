@@ -11,6 +11,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('meus-dados', [TitularController::class, 'meusDados'])->middleware('can:lgpd.exportar');
         Route::patch('meus-dados', [TitularController::class, 'atualizar'])->middleware('can:lgpd.exportar');
         Route::get('exportacao', [TitularController::class, 'exportacao'])->middleware('can:lgpd.exportar');
+        Route::get('receitas', [TitularController::class, 'receitas'])->middleware('can:receitas.ver');
+        Route::get('exames', [TitularController::class, 'exames'])->middleware('can:exames.ver');
         Route::get('consentimentos', [TitularController::class, 'consentimentos'])->middleware('can:lgpd.consentimentos');
         Route::post('consentimentos', [TitularController::class, 'conceder'])->middleware('can:lgpd.consentimentos');
         Route::delete('consentimentos/{finalidade}', [TitularController::class, 'revogar'])->middleware('can:lgpd.consentimentos');

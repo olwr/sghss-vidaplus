@@ -33,7 +33,7 @@ class AgendamentoController extends Controller
         Gate::authorize('create', Agendamento::class);
 
         [$ag, $criado] = $this->service->agendar($request->validated(), $request->user(), $request->header('Idempotency-Key'));
-        $resposta = AgendamentoResource::make($ag->loadMissing(['paciente', 'profissional', 'unidade', 'sala']));
+        $resposta = AgendamentoResource::make($ag->loadMissing(['paciente', 'profissional.usuario', 'unidade', 'sala']));
 
         return $criado
             ? Resposta::criado($resposta, url("/api/v1/agendamentos/{$ag->uuid}"))
@@ -44,7 +44,7 @@ class AgendamentoController extends Controller
     {
         Gate::authorize('view', $agendamento);
 
-        return AgendamentoResource::make($agendamento->load(['paciente', 'profissional', 'unidade', 'sala']));
+        return AgendamentoResource::make($agendamento->load(['paciente', 'profissional.usuario', 'unidade', 'sala']));
     }
 
     public function confirmar(Agendamento $agendamento): AgendamentoResource

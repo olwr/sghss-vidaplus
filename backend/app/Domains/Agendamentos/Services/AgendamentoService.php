@@ -42,7 +42,7 @@ class AgendamentoService
 
     public function listar(Request $request, Usuario $u): LengthAwarePaginator
     {
-        $consulta = Agendamento::query()->with(['paciente', 'profissional', 'unidade'])
+        $consulta = Agendamento::query()->with(['paciente', 'profissional.usuario', 'unidade', 'sala'])
             ->when($u->hasRole('paciente'), fn ($q) => $q->whereHas('paciente', fn ($p) => $p->where('usuario_id', $u->id)))
             ->when($request->query('status'), fn ($q, $s) => $q->where('status', $s))
             ->when($request->query('de'), fn ($q, $d) => $q->where('inicio_em', '>=', $d))

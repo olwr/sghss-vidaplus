@@ -557,6 +557,9 @@
                                                     "type": "object",
                                                     "required": [
                                                         "paciente_id",
+                                                        "paciente_nome",
+                                                        "profissional_nome",
+                                                        "unidade_nome",
                                                         "profissional_id",
                                                         "unidade_id",
                                                         "sala_telemedicina_id"
@@ -618,6 +621,9 @@
                                                     "type": "object",
                                                     "required": [
                                                         "paciente_id",
+                                                        "paciente_nome",
+                                                        "profissional_nome",
+                                                        "unidade_nome",
                                                         "profissional_id",
                                                         "unidade_id"
                                                     ]
@@ -783,6 +789,9 @@
                                                     "type": "object",
                                                     "required": [
                                                         "paciente_id",
+                                                        "paciente_nome",
+                                                        "profissional_nome",
+                                                        "unidade_nome",
                                                         "profissional_id",
                                                         "unidade_id"
                                                     ]
@@ -843,6 +852,9 @@
                                                     "type": "object",
                                                     "required": [
                                                         "paciente_id",
+                                                        "paciente_nome",
+                                                        "profissional_nome",
+                                                        "unidade_nome",
                                                         "profissional_id",
                                                         "unidade_id"
                                                     ]
@@ -903,6 +915,9 @@
                                                     "type": "object",
                                                     "required": [
                                                         "paciente_id",
+                                                        "paciente_nome",
+                                                        "profissional_nome",
+                                                        "unidade_nome",
                                                         "profissional_id",
                                                         "unidade_id"
                                                     ]
@@ -3258,6 +3273,13 @@
                         }
                     },
                     {
+                        "name": "unidade",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "especialidade",
                         "in": "query",
                         "schema": {
@@ -3493,7 +3515,6 @@
                                                     "type": "object",
                                                     "required": [
                                                         "nome",
-                                                        "email",
                                                         "unidade_id"
                                                     ]
                                                 }
@@ -5409,6 +5430,102 @@
                 }
             }
         },
+        "/v1/titular/receitas": {
+            "get": {
+                "operationId": "titular.receitas",
+                "summary": "8.1: as receitas do PR\u00d3PRIO titular (sem passar pelo prontu\u00e1rio; o PDF segue a Policy de receitas)",
+                "tags": [
+                    "Titular"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of `ReceitaResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/ReceitaResource"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "itens"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/titular/exames": {
+            "get": {
+                "operationId": "titular.exames",
+                "summary": "8.1: os exames do PR\u00d3PRIO titular, com a flag `resultado_disponivel` (o arquivo segue a Policy de exames)",
+                "tags": [
+                    "Titular"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of `ExameResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/ExameResource"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "resultado_disponivel"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/v1/titular/consentimentos": {
             "get": {
                 "operationId": "titular.consentimentos",
@@ -6670,6 +6787,11 @@
                     "paciente_id": {
                         "type": "string"
                     },
+                    "paciente_nome": {
+                        "description": "8.1: nomes para a tela (evita N chamadas extras do front); data_get() porque as rela\u00e7\u00f5es s\u00e3o tipadas como Model (Larastan)"
+                    },
+                    "profissional_nome": {},
+                    "unidade_nome": {},
                     "profissional_id": {
                         "type": [
                             "string",
@@ -7259,7 +7381,8 @@
                         "type": "string"
                     },
                     "email": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "8.1: e-mail e CPF (mascarado) s\u00e3o dados de gest\u00e3o; o paciente s\u00f3 v\u00ea o necess\u00e1rio para escolher o m\u00e9dico"
                     },
                     "tipo": {
                         "$ref": "#/components/schemas/TipoProfissional"
@@ -7291,7 +7414,6 @@
                     "tipo",
                     "especialidade",
                     "conselho",
-                    "cpf",
                     "ativo"
                 ],
                 "title": "ProfissionalResource"

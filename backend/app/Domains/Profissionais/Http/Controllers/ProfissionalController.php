@@ -24,6 +24,7 @@ class ProfissionalController extends Controller
     {
         $consulta = Profissional::query()->with('usuario', 'unidade')
             ->when($request->query('tipo'), fn ($q, $t) => $q->where('tipo', $t))
+            ->when($request->query('unidade'), fn ($q, $u) => $q->whereHas('unidade', fn ($x) => $x->where('uuid', $u)))
             ->when($request->query('especialidade'), fn ($q, $e) => $q->where('especialidade', 'ilike', '%'.addcslashes((string) $e, '%_\\').'%'));
 
         return ProfissionalResource::collection(
