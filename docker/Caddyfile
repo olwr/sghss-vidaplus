@@ -1,0 +1,12 @@
+# TLS automático (Let's Encrypt) para os dois domínios. Os domínios vêm do .env.production.
+{$DOMINIO_SITE} {
+	encode zstd gzip
+	reverse_proxy web:8080
+}
+
+{$DOMINIO_API} {
+	encode zstd gzip
+	# O Laravel já envia os cabeçalhos de segurança (CabecalhosDeSeguranca); o proxy só acrescenta HSTS.
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	reverse_proxy api:8080
+}

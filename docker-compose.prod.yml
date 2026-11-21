@@ -1,0 +1,64 @@
+# Sobreposição de PRODUÇÃO: docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env.production up -d
+# Remove o que é só de desenvolvimento (código montado, Xdebug, portas de banco/redis/storage, Mailpit)
+# e coloca o Caddy (TLS automático) na frente da API e do site.
+x-api-prod: &api-prod
+  image: ghcr.io/${GHCR_OWNER}/sghss-api:${SGHSS_VERSAO:-latest}
+  build: !reset null
+  volumes: !reset []
+  extra_hosts: !reset []
+  restart: unless-stopped
+  env_file: !override
+    - path: ./backend/.env.production
+      required: true
+
+services:
+  api:
+    <<: *api-prod
+    ports: !reset []
+    expose: ["8080"]
+
+  worker:
+    <<: *api-prod
+
+  scheduler:
+    <<: *api-prod
+
+  db:
+    ports: !reset []
+    restart: unless-stopped
+
+  redis:
+    ports: !reset []
+    restart: unless-stopped
+
+  storage:
+    ports: !reset []
+    restart: unless-stopped
+
+  mailpit:
+    profiles: ["dev-somente"]
+
+  web:
+    profiles: !reset []
+    image: ghcr.io/${GHCR_OWNER}/sghss-web:${SGHSS_VERSAO:-latest}
+    build: !reset null
+    ports: !reset []
+    expose: ["8080"]
+    restart: unless-stopped
+
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on: [api, web]
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMINIO_SITE: ${DOMINIO_SITE}
+      DOMINIO_API: ${DOMINIO_API}
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data: {}
+  caddy_config: {}

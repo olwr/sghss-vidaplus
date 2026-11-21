@@ -29,6 +29,9 @@ jobs:
               with:
                   context: ${{ matrix.contexto }}
                   target: ${{ matrix.alvo }}
+                  build-args: |
+                      VITE_API_URL=${{ vars.VITE_API_URL || 'http://localhost:8000/api/v1' }}
+                      VITE_JITSI_DOMAIN=${{ vars.VITE_JITSI_DOMAIN || '8x8.vc' }}
                   push: true
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
