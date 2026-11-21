@@ -10,6 +10,8 @@ import { simularApi } from './apoio'
  * Assim a política que vai para produção é a que foi testada no navegador.
  */
 const PORTA = 4180
+// Um servidor por ARQUIVO: sem isto o Playwright espalha os testes em vários workers e cada um tenta abrir a porta 4180 (EADDRINUSE).
+test.describe.configure({ mode: 'serial' })
 const RAIZ = join(import.meta.dirname, '..', 'dist')
 const TIPOS: Record<string, string> = {
   '.html': 'text/html',
