@@ -2,6 +2,7 @@
 .env.*
 !.env.example
 !.env.ci
+!.env.production.example
 node_modules/
 vendor/
 !/backend/lang/vendor/
