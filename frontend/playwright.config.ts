@@ -22,6 +22,8 @@ export default defineConfig({
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    // O .env NÃO vai para o Git; sem isto o build do CI fica sem VITE_API_URL e as chamadas não casam com o page.route.
+    env: { VITE_API_URL: 'http://localhost:8000/api/v1', VITE_JITSI_DOMAIN: 'localhost:8443' },
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
 })
