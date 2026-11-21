@@ -10,6 +10,7 @@ use App\Domains\Unidades\Models\Unidade;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Database\Seeders\PerfisPermissoesSeeder;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\Sanctum;
@@ -21,6 +22,11 @@ trait ComApi
 
     protected function prepararApi(): void
     {
+        // Cinto e suspensório: o `env_file` do Compose põe QUEUE_CONNECTION/CACHE_STORE=redis e APP_ENV=local no contêiner;
+        // se o phpunit.xml não os forçar, os testes passariam a depender do Redis e do .env do desenvolvedor.
+        config(['queue.default' => 'sync']);
+        Cache::setDefaultDriver('array');
+
         $this->seed(PerfisPermissoesSeeder::class);   // papéis COM permissões: os testes provam a matriz real
         Mail::fake();
         Storage::fake('s3');

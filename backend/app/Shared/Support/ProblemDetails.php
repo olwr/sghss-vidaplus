@@ -26,6 +26,7 @@ final class ProblemDetails
             $e instanceof ValidationException => [422, 'Dados inválidos'],
             $e instanceof RegraDeNegocioException => [422, 'Regra de negócio violada'],
             $e instanceof ConflictException => [409, 'Conflito'],
+            $sqlState === '22P02' => [404, 'Recurso não encontrado'], // identificador fora do formato uuid
             $sqlState === '23P01', $sqlState === '23505' => [409, 'Conflito de dados'],
             $e instanceof AuthenticationException => [401, 'Não autenticado'],
             $e instanceof AccessDeniedHttpException => [403, 'Acesso negado'],
@@ -42,6 +43,7 @@ final class ProblemDetails
         $detalhe = match (true) {
             $status >= 500 => 'Ocorreu um erro inesperado.', // nunca vazar detalhes internos
             $e instanceof ValidationException => 'Um ou mais campos são inválidos.',
+            $sqlState === '22P02' => 'Identificador inválido.',
             $sqlState !== null => 'A operação conflita com dados existentes.',
             default => $e->getMessage() ?: $titulo,
         };

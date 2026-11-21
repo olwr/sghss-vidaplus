@@ -51,5 +51,9 @@ jobs:
               run: vendor/bin/pint --test
             - name: Larastan
               run: vendor/bin/phpstan analyse --memory-limit=1G --no-progress
-            - name: PHPUnit
-              run: php artisan test --coverage --min=0 # voltará para 60 quando houver testes mais robustos
+            - name: PHPUnit (sem o grupo de desempenho) com cobertura mínima
+              run: php artisan test --exclude-group=desempenho --coverage --min=80
+            - name: Desempenho (CT044) - SLA folgado por causa do runner compartilhado
+              run: php artisan test --group=desempenho
+              env:
+                  SLA_MS: "1000"

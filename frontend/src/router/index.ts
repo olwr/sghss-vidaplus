@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, START_LOCATION, type RouteRecordRaw } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import type { Perfil } from '@/types/api'
 
@@ -239,8 +239,9 @@ router.beforeEach((para) => {
 })
 
 /** Acessibilidade em SPA: título da página + foco no conteúdo a cada navegação (leitores de tela anunciam a nova tela). */
-router.afterEach((para) => {
+router.afterEach((para, de) => {
   document.title = `${para.meta.titulo ?? 'VidaPlus'} · VidaPlus SGHSS`
+  if (de === START_LOCATION) return
   queueMicrotask(() => document.getElementById('conteudo')?.focus({ preventScroll: false }))
 })
 

@@ -1,0 +1,2219 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-11-19T20:00:00.000Z",
+  "__export_source": "sghss.vidaplus",
+  "resources": [
+    {
+      "_id": "wrk_sghss",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "SGHSS VidaPlus — API v1",
+      "scope": "collection",
+      "description": "Coleção de testes manuais. Escolha o ambiente (perfil) no canto superior esquerdo e envie as requisições."
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "parentId": "wrk_sghss",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:8000",
+        "senha": "demo@passwrd#2026",
+        "data_agenda": "2027-01-11",
+        "token": "",
+        "unidade_id": "",
+        "paciente_id": "",
+        "profissional_id": "",
+        "agendamento_id": "",
+        "slot_inicio": "",
+        "leito_id": "",
+        "suprimento_id": "",
+        "internacao_id": "",
+        "prontuario_id": "",
+        "receita_id": "",
+        "exame_id": "",
+        "exportacao_id": "",
+        "usuario_id": "",
+        "sala_id": ""
+      },
+      "isPrivate": false,
+      "metaSortKey": 1
+    },
+    {
+      "_id": "env_admin",
+      "_type": "environment",
+      "parentId": "env_base",
+      "name": "Administrador",
+      "data": {
+        "email": "alan@vidaplus.test",
+        "token": ""
+      },
+      "isPrivate": false,
+      "metaSortKey": 10
+    },
+    {
+      "_id": "env_sec",
+      "_type": "environment",
+      "parentId": "env_base",
+      "name": "Secretário",
+      "data": {
+        "email": "renato@vidaplus.test",
+        "token": ""
+      },
+      "isPrivate": false,
+      "metaSortKey": 11
+    },
+    {
+      "_id": "env_prof",
+      "_type": "environment",
+      "parentId": "env_base",
+      "name": "Profissional de saúde",
+      "data": {
+        "email": "camila@vidaplus.test",
+        "token": ""
+      },
+      "isPrivate": false,
+      "metaSortKey": 12
+    },
+    {
+      "_id": "env_pac",
+      "_type": "environment",
+      "parentId": "env_base",
+      "name": "Paciente",
+      "data": {
+        "email": "ana@vidaplus.test",
+        "token": ""
+      },
+      "isPrivate": false,
+      "metaSortKey": 13
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "00 · Autenticação",
+      "description": "Rode o login do perfil desejado (ou apenas escolha o ambiente: o token é obtido sozinho).",
+      "environment": {},
+      "metaSortKey": 1000
+    },
+    {
+      "_id": "fld_unid",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "01 · Unidades",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 9000
+    },
+    {
+      "_id": "fld_pac",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "02 · Pacientes",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 15000
+    },
+    {
+      "_id": "fld_prof",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "03 · Profissionais e equipes",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 22000
+    },
+    {
+      "_id": "fld_ag",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "04 · Agendas e agendamentos",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 29000
+    },
+    {
+      "_id": "fld_pront",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "05 · Prontuário, receitas e exames",
+      "description": "Perfil clínico: Profissional de saúde. O Administrador NÃO tem acesso clínico (403 esperado).",
+      "environment": {},
+      "metaSortKey": 43000
+    },
+    {
+      "_id": "fld_int",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "06 · Internações, leitos e suprimentos",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 56000
+    },
+    {
+      "_id": "fld_tr",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "07 · Transferências",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 70000
+    },
+    {
+      "_id": "fld_rel",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "08 · Relatórios [admin]",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 73000
+    },
+    {
+      "_id": "fld_lgpd",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "09 · LGPD e auditoria",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 77000
+    },
+    {
+      "_id": "fld_adm",
+      "_type": "request_group",
+      "parentId": "wrk_sghss",
+      "name": "10 · Administração e telemedicina",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 88000
+    },
+    {
+      "_id": "req_login",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Login (perfil do ambiente ativo)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/auth/login",
+      "description": "1) Escolha o ambiente (perfil) no seletor. 2) Envie este Login. O script de pós-resposta grava o `token` nesse ambiente e todas as outras requisições o usam. Para trocar de usuário: troque o ambiente e envie o Login de novo. Limite: 5 logins/min por e-mail.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 2000,
+      "parameters": [],
+      "authentication": {},
+      "afterResponseScript": "// Guarda o token no ambiente ATIVO (o perfil escolhido no seletor de ambientes).\nif (insomnia.response.code === 200) {\n  insomnia.environment.set('token', insomnia.response.json().token);\n}",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"{{ _.email }}\",\n  \"password\": \"{{ _.senha }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_prep",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Preencher ids de apoio (rodar 1x como Administrador)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/auth/unidades",
+      "description": "Depois do Login do Administrador, envie esta requisição UMA vez: um script busca unidade, paciente (Ana), profissional (Dra. Camila), leito, suprimento, usuário e o 1º horário livre e grava nas variáveis do ambiente base. Veja o resultado na aba **Console**.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 3000,
+      "parameters": [],
+      "authentication": {},
+      "afterResponseScript": "// Preenche os ids de apoio (unidade, paciente, profissional, horário, leito...) para as URLs {{ _.xxx_id }}.\n// Rode UMA vez, no ambiente Administrador, DEPOIS do Login.\nconst base = insomnia.variables.get('base_url');\nconst token = insomnia.environment.get('token');\nconst get = (p) => new Promise((ok, no) => insomnia.sendRequest(\n  { url: base + p, method: 'GET', header: { Accept: 'application/json', Authorization: 'Bearer ' + token } },\n  (e, r) => (e ? no(e) : ok(r.json()))));\nconst set = (k, v) => { if (v) insomnia.baseEnvironment.set(k, v); };\nconst passos = [\n  async () => { const j = await get('/api/v1/auth/unidades'); set('unidade_id', (j.data.find(u => u.nome === 'VidaPlus Hospital Central') || j.data[0] || {}).id); },\n  async () => { const j = await get('/api/v1/pacientes?nome=' + encodeURIComponent('Ana Maria')); set('paciente_id', (j.data[0] || {}).id); },\n  async () => { const j = await get('/api/v1/profissionais'); set('profissional_id', (j.data.find(p => p.especialidade === 'Clínica Geral') || j.data[0] || {}).id); },\n  async () => { const j = await get('/api/v1/leitos'); set('leito_id', (j.data[0] || {}).id); },\n  async () => { const j = await get('/api/v1/suprimentos'); set('suprimento_id', (j.data[0] || {}).id); },\n  async () => { const j = await get('/api/v1/admin/usuarios'); set('usuario_id', (j.data[0] || {}).id); },\n  async () => {\n    const q = '?profissional=' + insomnia.baseEnvironment.get('profissional_id') + '&data=' + insomnia.baseEnvironment.get('data_agenda') + '&unidade=' + insomnia.baseEnvironment.get('unidade_id');\n    const j = await get('/api/v1/agendas/disponibilidade' + q); set('slot_inicio', (j.data[0] || {}).inicio);\n  },\n];\nfor (const p of passos) { try { await p(); } catch (e) { console.log('passo falhou:', e); } }\nconsole.log('ids de apoio:', ['unidade_id','paciente_id','profissional_id','leito_id','suprimento_id','usuario_id','slot_inicio'].map(k => k + '=' + insomnia.baseEnvironment.get(k)).join(' | '));"
+    },
+    {
+      "_id": "req_me",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Quem sou eu (GET /auth/me)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/auth/me",
+      "description": "Confere o perfil do token atual. 401 = token ausente/expirado.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 4000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_logout",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Logout",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/auth/logout",
+      "description": "Revoga o token atual (204). Depois disso rode o login de novo.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 5000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_unid_pub",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Unidades públicas (cadastro)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/auth/unidades",
+      "description": "Sem token. Lista as unidades para o autocadastro.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 6000,
+      "parameters": [],
+      "authentication": {}
+    },
+    {
+      "_id": "req_registro",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Autocadastro de paciente",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/auth/registro",
+      "description": "Sem token. Troque o e-mail e o CPF a cada execução (CPF válido e único).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 7000,
+      "parameters": [],
+      "authentication": {},
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Paciente de Teste\",\n  \"email\": \"teste.paciente@vidaplus.test\",\n  \"password\": \"Senha@12345\",\n  \"password_confirmation\": \"Senha@12345\",\n  \"cpf\": \"529.982.247-25\",\n  \"data_nascimento\": \"1990-05-10\",\n  \"sexo\": \"feminino\",\n  \"unidade_id\": \"{{ _.unidade_id }}\",\n  \"consentimento\": true\n}"
+      }
+    },
+    {
+      "_id": "req_saude",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Saúde da API (health check)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/saude",
+      "description": "Sem token. 200 = banco e cache ok; 503 = degradado.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 8000,
+      "parameters": [],
+      "authentication": {}
+    },
+    {
+      "_id": "req_unid_list",
+      "_type": "request",
+      "parentId": "fld_unid",
+      "name": "Listar unidades",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/unidades",
+      "description": "Único filtro: `status` (ativa, desativada, em_reforma, em_recesso). NÃO filtra por nome/id: para uma unidade, use 'Detalhar unidade'.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 10000,
+      "parameters": [
+        {
+          "name": "status",
+          "value": "ativa",
+          "disabled": true
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_unid_show",
+      "_type": "request",
+      "parentId": "fld_unid",
+      "name": "Detalhar unidade (por id)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/unidades/{{ _.unidade_id }}",
+      "description": "`unidade_id` vem da resposta de 'Listar unidades' (campo `data[].id`) e já é preenchido pelo ambiente.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 11000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_unid_new",
+      "_type": "request",
+      "parentId": "fld_unid",
+      "name": "Criar unidade [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/unidades",
+      "description": "CNPJ válido e único.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 12000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tipo\": \"clinica\",\n  \"nome\": \"VidaPlus Clínica Teste\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"cidade\": \"Pelotas\",\n  \"uf\": \"RS\",\n  \"cep\": \"96010000\"\n}"
+      }
+    },
+    {
+      "_id": "req_unid_upd",
+      "_type": "request",
+      "parentId": "fld_unid",
+      "name": "Atualizar unidade [admin]",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/v1/unidades/{{ _.unidade_id }}",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 13000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"telefone\": \"5332221111\"\n}"
+      }
+    },
+    {
+      "_id": "req_unid_st",
+      "_type": "request",
+      "parentId": "fld_unid",
+      "name": "Alterar status da unidade [admin]",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/v1/unidades/{{ _.unidade_id }}/status",
+      "description": "Valores: ativa, desativada, em_reforma, em_recesso.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 14000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"em_reforma\"\n}"
+      }
+    },
+    {
+      "_id": "req_pac_list",
+      "_type": "request",
+      "parentId": "fld_pac",
+      "name": "Listar / buscar pacientes",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/pacientes",
+      "description": "Filtros (caixa marcada = ativo): `nome` (parcial; vem ativo para o ambiente achar a Ana), `cpf` (só dígitos ou formatado), `unidade` (id da unidade).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 16000,
+      "parameters": [
+        {
+          "name": "cpf",
+          "value": "111.444.777-35",
+          "disabled": true
+        },
+        {
+          "name": "nome",
+          "value": "Ana Maria",
+          "disabled": false
+        },
+        {
+          "name": "unidade",
+          "value": "{{ _.unidade_id }}",
+          "disabled": true
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_pac_show",
+      "_type": "request",
+      "parentId": "fld_pac",
+      "name": "Detalhar paciente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/pacientes/{{ _.paciente_id }}",
+      "description": "`paciente_id` = `data[].id` da listagem.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 17000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_pac_new",
+      "_type": "request",
+      "parentId": "fld_pac",
+      "name": "Cadastrar paciente [secretário]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/pacientes",
+      "description": "CPF válido e único.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 18000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Carlos Teste\",\n  \"cpf\": \"390.533.447-05\",\n  \"data_nascimento\": \"1985-07-20\",\n  \"sexo\": \"masculino\",\n  \"email\": \"carlos@exemplo.test\",\n  \"unidade_id\": \"{{ _.unidade_id }}\",\n  \"consentimento\": true\n}"
+      }
+    },
+    {
+      "_id": "req_pac_upd",
+      "_type": "request",
+      "parentId": "fld_pac",
+      "name": "Atualizar paciente",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/v1/pacientes/{{ _.paciente_id }}",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 19000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"telefone\": \"53999990000\"\n}"
+      }
+    },
+    {
+      "_id": "req_pac_eq",
+      "_type": "request",
+      "parentId": "fld_pac",
+      "name": "Equipe do paciente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/pacientes/{{ _.paciente_id }}/equipe",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 20000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_pac_del",
+      "_type": "request",
+      "parentId": "fld_pac",
+      "name": "Excluir paciente",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/v1/pacientes/{{ _.paciente_id }}",
+      "description": "Cuidado: use o paciente criado no teste, não o da demonstração.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 21000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_prof_list",
+      "_type": "request",
+      "parentId": "fld_prof",
+      "name": "Listar profissionais",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/profissionais",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 23000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_prof_show",
+      "_type": "request",
+      "parentId": "fld_prof",
+      "name": "Detalhar profissional",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/profissionais/{{ _.profissional_id }}",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 24000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_prof_ag",
+      "_type": "request",
+      "parentId": "fld_prof",
+      "name": "Agenda do profissional",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/profissionais/{{ _.profissional_id }}/agenda",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 25000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_prof_new",
+      "_type": "request",
+      "parentId": "fld_prof",
+      "name": "Cadastrar profissional [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/profissionais",
+      "description": "Troque e-mail/CPF a cada execução.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 26000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Dr. Teste\",\n  \"email\": \"dr.teste@vidaplus.test\",\n  \"password\": \"Senha@12345\",\n  \"cpf\": \"168.995.350-09\",\n  \"tipo\": \"medico\",\n  \"especialidade\": \"Cardiologia\",\n  \"conselho_sigla\": \"CRM\",\n  \"conselho_numero\": \"654321\",\n  \"conselho_uf\": \"RS\",\n  \"unidade_id\": \"{{ _.unidade_id }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_eq_list",
+      "_type": "request",
+      "parentId": "fld_prof",
+      "name": "Listar equipes",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/equipes",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 27000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_eq_new",
+      "_type": "request",
+      "parentId": "fld_prof",
+      "name": "Criar equipe [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/equipes",
+      "description": "Campos: nome, descricao (opcional), unidade_id.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 28000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Equipe Clínica A\",\n  \"unidade_id\": \"{{ _.unidade_id }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_disp",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Disponibilidade (horários livres)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/agendas/disponibilidade",
+      "description": "Ative `profissional` e `data` (YYYY-MM-DD, futura, dia útil). `data` vem de `data_agenda` do ambiente. Retorna `data[].inicio`.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 30000,
+      "parameters": [
+        {
+          "name": "profissional",
+          "value": "{{ _.profissional_id }}",
+          "disabled": true
+        },
+        {
+          "name": "data",
+          "value": "{{ _.data_agenda }}",
+          "disabled": true
+        },
+        {
+          "name": "unidade",
+          "value": "{{ _.unidade_id }}",
+          "disabled": true
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_ag_new",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Criar agendamento (idempotente)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/agendamentos",
+      "description": "Perfil paciente: omita `paciente_id`. Reenviar com a MESMA `Idempotency-Key` devolve 200 + `Idempotent-Replayed: true` (sem duplicar). `inicio_em` usa o 1º horário livre da 'Disponibilidade' (rode-a antes).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Idempotency-Key",
+          "value": "{% uuid 'v4' %}"
+        }
+      ],
+      "metaSortKey": 31000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "afterResponseScript": "if ([200,201,202].includes(insomnia.response.code)) { const j = insomnia.response.json(); const v = (j.data && j.data.id) || j.id; if (v) insomnia.baseEnvironment.set('agendamento_id', v); }",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tipo\": \"consulta\",\n  \"modalidade\": \"presencial\",\n  \"paciente_id\": \"{{ _.paciente_id }}\",\n  \"profissional_id\": \"{{ _.profissional_id }}\",\n  \"unidade_id\": \"{{ _.unidade_id }}\",\n  \"inicio_em\": \"{{ _.slot_inicio }}\",\n  \"motivo\": \"Consulta de rotina\"\n}"
+      }
+    },
+    {
+      "_id": "req_ag_new_pac",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Criar agendamento — como Paciente",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/agendamentos",
+      "description": "Use no ambiente **Paciente**: sem `paciente_id` (o servidor usa o próprio paciente do token).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Idempotency-Key",
+          "value": "{% uuid 'v4' %}"
+        }
+      ],
+      "metaSortKey": 32000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tipo\": \"consulta\",\n  \"modalidade\": \"presencial\",\n  \"profissional_id\": \"{{ _.profissional_id }}\",\n  \"unidade_id\": \"{{ _.unidade_id }}\",\n  \"inicio_em\": \"{{ _.slot_inicio }}\",\n  \"motivo\": \"Consulta de rotina\"\n}"
+      }
+    },
+    {
+      "_id": "req_ag_list",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Listar agendamentos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/agendamentos",
+      "description": "Filtros: status, de, ate, profissional, paciente (ids).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 33000,
+      "parameters": [
+        {
+          "name": "status",
+          "value": "agendado",
+          "disabled": true
+        },
+        {
+          "name": "de",
+          "value": "2027-01-01",
+          "disabled": true
+        },
+        {
+          "name": "ate",
+          "value": "2027-12-31",
+          "disabled": true
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_ag_show",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Detalhar agendamento",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/agendamentos/{{ _.agendamento_id }}",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 34000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_ag_confirmar",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Confirmar agendamento",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/agendamentos/{{ _.agendamento_id }}/confirmar",
+      "description": "Transições válidas: agendado→confirmado→em_atendimento→concluído; outras respondem 422.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 35000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_ag_iniciar",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Iniciar agendamento",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/agendamentos/{{ _.agendamento_id }}/iniciar",
+      "description": "Transições válidas: agendado→confirmado→em_atendimento→concluído; outras respondem 422.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 36000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_ag_concluir",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Concluir agendamento",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/agendamentos/{{ _.agendamento_id }}/concluir",
+      "description": "Transições válidas: agendado→confirmado→em_atendimento→concluído; outras respondem 422.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 37000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_ag_faltou",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Faltou agendamento",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/agendamentos/{{ _.agendamento_id }}/faltou",
+      "description": "Transições válidas: agendado→confirmado→em_atendimento→concluído; outras respondem 422.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 38000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_ag_cancelar",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Cancelar agendamento",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/agendamentos/{{ _.agendamento_id }}/cancelar",
+      "description": "Transições válidas: agendado→confirmado→em_atendimento→concluído; outras respondem 422.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 39000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"motivo\": \"Paciente desistiu\"\n}"
+      }
+    },
+    {
+      "_id": "req_ag_remarcar",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Remarcar agendamento",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/agendamentos/{{ _.agendamento_id }}/remarcar",
+      "description": "Transições válidas: agendado→confirmado→em_atendimento→concluído; outras respondem 422.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 40000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"inicio_em\": \"{{ _.slot_inicio }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_agenda_list",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Listar agendas (grade de horários)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/agendas",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 41000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_agenda_new",
+      "_type": "request",
+      "parentId": "fld_ag",
+      "name": "Criar agenda [admin/profissional]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/agendas",
+      "description": "dia_semana: 0=domingo … 6=sábado.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 42000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"profissional_id\": \"{{ _.profissional_id }}\",\n  \"unidade_id\": \"{{ _.unidade_id }}\",\n  \"dia_semana\": 6,\n  \"hora_inicio\": \"08:00\",\n  \"hora_fim\": \"12:00\",\n  \"duracao_atendimento_min\": 30,\n  \"vigencia_inicio\": \"2027-01-01\"\n}"
+      }
+    },
+    {
+      "_id": "req_pr_new",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Criar prontuário [profissional]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/prontuarios",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 44000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "afterResponseScript": "if ([200,201,202].includes(insomnia.response.code)) { const j = insomnia.response.json(); const v = (j.data && j.data.id) || j.id; if (v) insomnia.baseEnvironment.set('prontuario_id', v); }",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"paciente_id\": \"{{ _.paciente_id }}\",\n  \"tipo_sanguineo\": \"O+\",\n  \"alergias\": \"Dipirona\"\n}"
+      }
+    },
+    {
+      "_id": "req_pr_show",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Ver prontuário do paciente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/pacientes/{{ _.paciente_id }}/prontuario",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 45000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_pr_upd",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Atualizar prontuário",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/v1/prontuarios/{{ _.prontuario_id }}",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 46000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"observacoes_gerais\": \"Retorno em 30 dias\"\n}"
+      }
+    },
+    {
+      "_id": "req_pr_reg",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Registrar atendimento no prontuário",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/prontuarios/{{ _.prontuario_id }}/registros",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 47000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"queixa_principal\": \"Dor de cabeça\",\n  \"diagnostico\": \"Cefaleia tensional\",\n  \"conduta\": \"Analgesia e repouso\"\n}"
+      }
+    },
+    {
+      "_id": "req_rec_new",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Emitir receita",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/receitas",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 48000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "afterResponseScript": "if ([200,201,202].includes(insomnia.response.code)) { const j = insomnia.response.json(); const v = (j.data && j.data.id) || j.id; if (v) insomnia.baseEnvironment.set('receita_id', v); }",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"paciente_id\": \"{{ _.paciente_id }}\",\n  \"itens\": [\n    {\n      \"medicamento\": \"Paracetamol 500 mg\",\n      \"posologia\": \"1 comprimido de 8/8h\",\n      \"duracao\": \"5 dias\",\n      \"quantidade\": 15\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_rec_show",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Ver receita",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/receitas/{{ _.receita_id }}",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 49000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_rec_pdf",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Baixar receita (PDF)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/receitas/{{ _.receita_id }}/pdf",
+      "description": "Use 'Send and Download' para salvar o PDF.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 50000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_rec_can",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Cancelar receita",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/receitas/{{ _.receita_id }}/cancelar",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 51000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_ex_new",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Solicitar exame",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/exames",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 52000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "afterResponseScript": "if ([200,201,202].includes(insomnia.response.code)) { const j = insomnia.response.json(); const v = (j.data && j.data.id) || j.id; if (v) insomnia.baseEnvironment.set('exame_id', v); }",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"paciente_id\": \"{{ _.paciente_id }}\",\n  \"nome\": \"Hemograma completo\",\n  \"instrucoes\": \"Jejum de 8 horas\"\n}"
+      }
+    },
+    {
+      "_id": "req_ex_show",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Ver exame",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/exames/{{ _.exame_id }}",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 53000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_ex_res",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Registrar resultado do exame",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/exames/{{ _.exame_id }}/resultado",
+      "description": "Envie `resumo` (texto) ou, em Body → Multipart, um `arquivo` (pdf, jpg, png até 10 MB).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 54000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"resumo\": \"Dentro dos valores de referência\"\n}"
+      }
+    },
+    {
+      "_id": "req_ex_get",
+      "_type": "request",
+      "parentId": "fld_pront",
+      "name": "Ver resultado do exame",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/exames/{{ _.exame_id }}/resultado",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 55000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_leito_list",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Listar leitos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/leitos",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 57000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_leito_new",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Criar leito [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/leitos",
+      "description": "tipo: enfermaria, apartamento, uti.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 58000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidade_id\": \"{{ _.unidade_id }}\",\n  \"codigo\": \"TESTE-01\",\n  \"setor\": \"Clínica médica\",\n  \"tipo\": \"enfermaria\",\n  \"valor_diaria\": 350\n}"
+      }
+    },
+    {
+      "_id": "req_leito_upd",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Atualizar leito [admin]",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/v1/leitos/{{ _.leito_id }}",
+      "description": "status: disponivel ou manutencao.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 59000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"manutencao\"\n}"
+      }
+    },
+    {
+      "_id": "req_int_list",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Listar internações",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/internacoes",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 60000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_int_show",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Detalhar internação",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/internacoes/{{ _.internacao_id }}",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 61000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_int_new",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Solicitar internação [profissional]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/internacoes",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 62000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "afterResponseScript": "if ([200,201,202].includes(insomnia.response.code)) { const j = insomnia.response.json(); const v = (j.data && j.data.id) || j.id; if (v) insomnia.baseEnvironment.set('internacao_id', v); }",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"paciente_id\": \"{{ _.paciente_id }}\",\n  \"motivo\": \"Observação clínica\"\n}"
+      }
+    },
+    {
+      "_id": "req_int_adm",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Admitir internação [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/internacoes/{{ _.internacao_id }}/admitir",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 63000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"leito_id\": \"{{ _.leito_id }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_int_alta",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Dar alta [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/internacoes/{{ _.internacao_id }}/alta",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 64000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_int_can",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Cancelar internação [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/internacoes/{{ _.internacao_id }}/cancelar",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 65000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_sup_list",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Listar suprimentos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/suprimentos",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 66000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_sup_new",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Criar suprimento [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/suprimentos",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 67000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidade_id\": \"{{ _.unidade_id }}\",\n  \"nome\": \"Luva de procedimento\",\n  \"codigo\": \"LUV-001\",\n  \"unidade_medida\": \"caixa\",\n  \"quantidade_atual\": 50,\n  \"quantidade_minima\": 10\n}"
+      }
+    },
+    {
+      "_id": "req_sup_upd",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Atualizar suprimento [admin]",
+      "method": "PATCH",
+      "url": "{{ _.base_url }}/api/v1/suprimentos/{{ _.suprimento_id }}",
+      "description": "Só nome, unidade de medida e mínimo. A quantidade muda por 'Movimentar'.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 68000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"quantidade_minima\": 20\n}"
+      }
+    },
+    {
+      "_id": "req_sup_mov",
+      "_type": "request",
+      "parentId": "fld_int",
+      "name": "Movimentar estoque [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/suprimentos/{{ _.suprimento_id }}/movimentar",
+      "description": "`quantidade` positiva = entrada, negativa = saída (saldo nunca fica negativo: 422).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 69000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"quantidade\": -5,\n  \"motivo\": \"Uso na enfermaria\"\n}"
+      }
+    },
+    {
+      "_id": "req_tr_new",
+      "_type": "request",
+      "parentId": "fld_tr",
+      "name": "Registrar transferência de paciente",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/transferencias",
+      "description": "tipo: paciente (usa paciente_id) ou profissional (usa profissional_id).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 71000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tipo\": \"paciente\",\n  \"paciente_id\": \"{{ _.paciente_id }}\",\n  \"unidade_destino_id\": \"{{ _.unidade_id }}\",\n  \"motivo\": \"Necessidade de especialidade\"\n}"
+      }
+    },
+    {
+      "_id": "req_tr_list",
+      "_type": "request",
+      "parentId": "fld_tr",
+      "name": "Listar transferências [admin]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/transferencias",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 72000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_rel",
+      "_type": "request",
+      "parentId": "fld_rel",
+      "name": "Relatório (consultas)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/relatorios/consultas",
+      "description": "Troque `consultas` por: ocupacao-leitos, internacoes, financeiro, estoque-critico. Filtros `de`/`ate` (YYYY-MM-DD).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 74000,
+      "parameters": [
+        {
+          "name": "de",
+          "value": "2026-01-01",
+          "disabled": true
+        },
+        {
+          "name": "ate",
+          "value": "2026-12-31",
+          "disabled": true
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_exp",
+      "_type": "request",
+      "parentId": "fld_rel",
+      "name": "Pedir exportação (assíncrona)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/relatorios/exportacoes",
+      "description": "202 + id. Depois consulte o id.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 75000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "afterResponseScript": "if ([200,201,202].includes(insomnia.response.code)) { const j = insomnia.response.json(); const v = (j.data && j.data.id) || j.id; if (v) insomnia.baseEnvironment.set('exportacao_id', v); }",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"relatorio\": \"consultas\",\n  \"formato\": \"xlsx\"\n}"
+      }
+    },
+    {
+      "_id": "req_exp_get",
+      "_type": "request",
+      "parentId": "fld_rel",
+      "name": "Consultar exportação",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/relatorios/exportacoes/{{ _.exportacao_id }}",
+      "description": "Cole o `id` da resposta anterior em `exportacao_id` (ambiente).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 76000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_tit_dados",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Meus dados [paciente]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/titular/meus-dados",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 78000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_tit_exp",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Exportar meus dados [paciente]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/titular/exportacao",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 79000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_tit_con",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Listar consentimentos [paciente]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/titular/consentimentos",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 80000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_tit_conc",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Conceder consentimento [paciente]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/titular/consentimentos",
+      "description": "finalidade: atendimento_saude, comunicacao, pesquisa.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 81000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"finalidade\": \"pesquisa\"\n}"
+      }
+    },
+    {
+      "_id": "req_tit_rev",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Revogar consentimento [paciente]",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/v1/titular/consentimentos/pesquisa",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 82000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_anon",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Anonimizar paciente [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/lgpd/pacientes/{{ _.paciente_id }}/anonimizar",
+      "description": "IRREVERSÍVEL — use só um paciente criado para teste.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 83000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_aud_at",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Auditoria: atividades [admin]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/auditoria/atividades",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 84000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_aud_ac",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Auditoria: acessos [admin]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/auditoria/acessos",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 85000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_aud_conf",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Auditoria: conformidade LGPD [admin]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/auditoria/conformidade-lgpd",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 86000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_aud_put",
+      "_type": "request",
+      "parentId": "fld_lgpd",
+      "name": "Auditoria é imutável (PUT → 403)",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/api/v1/auditoria/qualquer",
+      "description": "Prova a imutabilidade do log: PUT/PATCH/DELETE respondem 403.",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 87000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_us_list",
+      "_type": "request",
+      "parentId": "fld_adm",
+      "name": "Listar usuários [admin]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/admin/usuarios",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 89000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_us_show",
+      "_type": "request",
+      "parentId": "fld_adm",
+      "name": "Detalhar usuário [admin]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/admin/usuarios/{{ _.usuario_id }}",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 90000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_us_rev",
+      "_type": "request",
+      "parentId": "fld_adm",
+      "name": "Revogar sessões do usuário [admin]",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/admin/usuarios/{{ _.usuario_id }}/revogar-sessoes",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 91000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_perfis",
+      "_type": "request",
+      "parentId": "fld_adm",
+      "name": "Listar perfis [admin]",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/admin/perfis",
+      "description": "",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 92000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_sala_in",
+      "_type": "request",
+      "parentId": "fld_adm",
+      "name": "Entrar na sala de telemedicina",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/telemedicina/salas/{{ _.sala_id }}/entrar",
+      "description": "`sala_id` = `sala.id` do agendamento de telemedicina (modalidade telemedicina).",
+      "headers": [
+        {
+          "name": "Accept",
+          "value": "application/json"
+        }
+      ],
+      "metaSortKey": 93000,
+      "parameters": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    }
+  ]
+}
