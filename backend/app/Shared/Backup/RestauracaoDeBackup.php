@@ -18,12 +18,14 @@ final class RestauracaoDeBackup
     /**
      * @param  array{host:string,port:int|string,usuario:string,senha:string}  $conexao
      */
-    public function __construct(private readonly array $conexao) {}
+    public function __construct(private readonly array $conexao)
+    {
+    }
 
     /** Extrai o primeiro .sql do zip (layout Spatie: db-dumps/postgresql-<banco>.sql). */
     public function extrairDump(string $zip, ?string $senha, string $destino): string
     {
-        $arquivo = new ZipArchive;
+        $arquivo = new ZipArchive();
         if ($arquivo->open($zip) !== true) {
             throw new RuntimeException('Não foi possível abrir o arquivo de backup.');
         }
@@ -125,8 +127,13 @@ final class RestauracaoDeBackup
             '-U', $this->conexao['usuario'], '-d', $banco, '-X', '-q',
         ], $args);
 
-        $proc = proc_open($cmd, [1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes,
-            null, array_merge(getenv(), ['PGPASSWORD' => $this->conexao['senha']]));
+        $proc = proc_open(
+            $cmd,
+            [1 => ['pipe', 'w'], 2 => ['pipe', 'w']],
+            $pipes,
+            null,
+            array_merge(getenv(), ['PGPASSWORD' => $this->conexao['senha']])
+        );
         if (! is_resource($proc)) {
             throw new RuntimeException('psql não pôde ser executado.');
         }

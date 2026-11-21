@@ -36,7 +36,7 @@ class RestauracaoDeBackupTest extends TestCase
         $sql = $this->dir.'/db-dumps/postgresql-sghss.sql';
         file_put_contents($sql, "SELECT 1;\n");
         $caminho = $this->dir.'/backup.zip';
-        $z = new ZipArchive;
+        $z = new ZipArchive();
         $z->open($caminho, ZipArchive::CREATE);
         $z->addFile($sql, 'db-dumps/postgresql-sghss.sql');
         $z->setEncryptionName('db-dumps/postgresql-sghss.sql', ZipArchive::EM_AES_256, $senha);

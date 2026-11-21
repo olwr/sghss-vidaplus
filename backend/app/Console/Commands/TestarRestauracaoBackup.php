@@ -49,8 +49,10 @@ class TestarRestauracaoBackup extends Command
                 $vivo[$t] = (int) DB::table($t)->count();
             }
 
-            $this->table(['tabela', 'restaurado', 'vivo'],
-                array_map(fn ($t) => [$t, $restaurado[$t], $vivo[$t]], $tabelas));
+            $this->table(
+                ['tabela', 'restaurado', 'vivo'],
+                array_map(fn ($t) => [$t, $restaurado[$t], $vivo[$t]], $tabelas)
+            );
 
             $divergentes = $restauracao->comparar($restaurado, $vivo);
             $rto = round(microtime(true) - $inicio, 1);
