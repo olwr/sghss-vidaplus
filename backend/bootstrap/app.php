@@ -16,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->api(append: [CabecalhosDeSeguranca::class]);
         $middleware->throttleApi('api');
+        // Atrás do Caddy (TLS termina no proxy): confia em X-Forwarded-* para gerar https:// em URLs e Location.
+        $middleware->trustProxies(at: '*');
         // API pura: não existe rota `login` para redirecionar. Sem isto, um pedido SEM `Accept: application/json`
         // (Insomnia, curl) faz o middleware `auth` chamar route('login') e responder 500 em vez de 401.
         $middleware->redirectGuestsTo(fn (Request $request) => null);

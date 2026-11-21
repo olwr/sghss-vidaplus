@@ -10,6 +10,15 @@
     "*.neon": "yaml"
   },
   "dotenv.enableAutocloaking": true,
+  // Tags próprias do Docker Compose (docker-compose.prod.yml): sem isto o YAML acusa "Unresolved tag: !reset/!override".
+  "yaml.customTags": [
+    "!reset scalar",
+    "!reset sequence",
+    "!reset mapping",
+    "!override scalar",
+    "!override sequence",
+    "!override mapping"
+  ],
   // ---------- PHP ----------
   // Sem PHP no WSL: a validação nativa do VS Code não tem binário. Intelephense cobre a análise.
   "php.validate.enable": false,
