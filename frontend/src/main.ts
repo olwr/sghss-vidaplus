@@ -7,6 +7,11 @@ import router from './router'
 import { aoReceber401 } from '@/api/http'
 import { useAuthStore } from '@/stores/auth'
 import { useAcessibilidadeStore } from '@/stores/acessibilidade'
+import { z } from 'zod'
+
+// CSP sem 'unsafe-eval': o zod testa `new Function` para otimizar e o navegador REPORTA isso como violação,
+// mesmo com o erro capturado. `jitless` pula o teste (validação continua correta, só sem a otimização).
+z.config({ jitless: true })
 
 const app = createApp(App)
 const pinia = createPinia()

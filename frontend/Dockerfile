@@ -17,7 +17,12 @@ RUN npm run build-only
 
 # ---- prod: arquivos estáticos servidos pelo Apache httpd (fallback de SPA p/ vue-router history) ----
 FROM httpd:2.4-alpine AS prod
+ARG VITE_API_URL=http://localhost:8000/api/v1
+ARG VITE_JITSI_DOMAIN=8x8.vc
 COPY docker/httpd-spa.conf /usr/local/apache2/conf/extra/httpd-spa.conf
+# Deriva as origens da CSP das mesmas variáveis usadas no build do Vue (um único lugar para configurar).
+RUN API_ORIGEM=$(echo "$VITE_API_URL" | sed -E 's#^(https?://[^/]+).*#\1#') \
+    && sed -i "s#__API_ORIGEM__#${API_ORIGEM}#g; s#__JITSI_ORIGEM__#https://${VITE_JITSI_DOMAIN}#g" /usr/local/apache2/conf/extra/httpd-spa.conf
 RUN echo 'Include conf/extra/httpd-spa.conf' >> /usr/local/apache2/conf/httpd.conf \
     && sed -i 's/^Listen 80$/Listen 8080/; s/^#LoadModule rewrite_module/LoadModule rewrite_module/; s/^#LoadModule headers_module/LoadModule headers_module/' /usr/local/apache2/conf/httpd.conf
 COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
