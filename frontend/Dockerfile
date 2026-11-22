@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # ---- dev: Vite com HMR (docker compose) ----
-FROM node:22-alpine AS dev
+FROM node:26-alpine AS dev
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
