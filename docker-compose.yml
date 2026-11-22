@@ -62,7 +62,7 @@ services:
       retries: 10
 
   storage: # S3-compatível (RustFS).
-    image: rustfs/rustfs:1.0.3
+    image: rustfs/rustfs:1.0.6
     environment:
       RUSTFS_VOLUMES: /data
       RUSTFS_ADDRESS: 0.0.0.0:9000
