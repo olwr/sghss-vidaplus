@@ -142,7 +142,7 @@ Um único deploy, dividido por **domínios** (`app/Domains/*`) e um núcleo comu
 ```
 Rota → Middleware (auth:sanctum, can:permissão) → Controller (fino)
      → Form Request (validação) → Service (regra de negócio)
-     → Repository (acesso a dados) → Model/PostgreSQL → API Resource (saída)
+     → Model/PostgreSQL → API Resource (saída)
 ```
 
 Domínios: `Seguranca`, `Unidades`, `Pacientes`, `Profissionais`, `Agendamentos`, `Prontuarios`, `Telemedicina`, `Internacoes`, `Transferencias`, `Relatorios`, `Administracao`. Em `Shared`: auditoria, backup, enums, exceções, escopos, suporte (`ProblemDetails`).
