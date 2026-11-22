@@ -198,7 +198,7 @@ O modelo de dados (26 tabelas) está em `docs/db/` (DBML e diagramas).
 | ----------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | **Docker** + Compose v2 | recente                                                      | Obrigatório. **Windows:** Docker Desktop (motor **WSL2** ou **Hyper-V**); ver [5.3](#53-windows-com-e-sem-wsl) |
 | **Git**                 | qualquer                                                     | Para clonar. No Windows, o **Git para Windows** inclui o **Git Bash** (necessário para os `scripts/*.sh`) |
-| **Node.js**             | LTS (22+)                                                    | Só para rodar o front em dev (`npm run dev`) e os testes do front |
+| **Node.js**             | **22.18+ ou 24.12+** (recomendado: a **LTS atual**)          | Só para o front em dev (`npm run dev`) e seus testes. Confira com `node -v`. **Versões mais antigas (ex.: 22.11) quebram** (ver [erros comuns](#8-erros-comuns-e-como-corrigir)) |
 | **Portas livres**       | `8000`, `5173`, `5432`, `6379`*, `8025`, `9000/9001` (dev) · `80` e `443` (prod local) | *Redis não publica porta no host                             |
 
 > Não é necessário ter PHP, Composer nem PostgreSQL instalados: tudo roda em contêineres.
@@ -223,19 +223,29 @@ cp frontend/.env.example frontend/.env  # URL da API para o Vite
 git config core.hooksPath .githooks     # (opcional) valida mensagens de commit
 ```
 
-**2) Instale as dependências do back-end e suba os serviços**
+**2) Instale as dependências e gere as chaves (ANTES de subir os serviços)**
 
 ```bash
 docker compose build
 docker compose run --rm --no-deps api composer install
-docker compose up -d
-docker compose ps        # tudo "running/healthy" (storage-init termina sozinho: Exited 0 é normal)
+
+# APP_KEY (criptografia da aplicação)
+docker compose run --rm --no-deps api php artisan key:generate
+
+# BLIND_INDEX_KEY (índice cego do CPF; sem ela o seed e o cadastro de pacientes falham)
+KEY="base64:$(docker compose run --rm --no-deps -T api php -r 'echo base64_encode(random_bytes(32));')"
+sed -i "s|^BLIND_INDEX_KEY=.*|BLIND_INDEX_KEY=$KEY|" backend/.env
+grep -E '^(APP_KEY|BLIND_INDEX_KEY)=' backend/.env | cut -c1-30     # as duas devem ter valor
 ```
 
-**3) Gere a chave, crie o banco e carregue os dados de demonstração**
+> [!IMPORTANT]
+> **Gere as chaves antes do `up`.** O Compose lê o `backend/.env` quando **cria** o contêiner e o valor vira variável de ambiente, que tem prioridade sobre o arquivo. Se você gerar a chave **depois** de subir, o contêiner continua vendo `APP_KEY` vazia e o erro `No application encryption key has been specified` aparece. Nesse caso, recrie: `docker compose up -d --force-recreate api worker scheduler`.
+
+**3) Suba os serviços, crie o banco e carregue os dados de demonstração**
 
 ```bash
-docker compose exec api php artisan key:generate
+docker compose up -d
+docker compose ps        # tudo "running/healthy" (storage-init termina sozinho: Exited 0 é normal)
 docker compose exec api php artisan migrate:fresh --seed
 ```
 
@@ -394,7 +404,7 @@ Confere `nosniff`, CSP, HSTS, ausência de `X-Powered-By`, rota protegida → 40
 **Instalação (caminho B)**
 
 1. **Docker Desktop** (https://www.docker.com/products/docker-desktop). Na instalação, escolha o motor **Hyper-V** (Windows Pro/Enterprise) ou **WSL2**. A virtualização precisa estar habilitada na BIOS/UEFI.
-2. **Git para Windows** (inclui o **Git Bash**) e **Node.js LTS** (22+).
+2. **Git para Windows** (inclui o **Git Bash**) e **Node.js LTS atual** (precisa ser **22.18+ ou 24.12+**; confira com `node -v`). Pelo `winget`: `winget install OpenJS.NodeJS.LTS`. Feche e reabra o PowerShell depois de instalar.
 3. Abra o **PowerShell** na pasta onde ficará o projeto (prefira um caminho curto, como `C:\projetos`).
 
 > [!IMPORTANT]
@@ -413,10 +423,17 @@ git config core.hooksPath .githooks          # (opcional)
 
 docker compose build
 docker compose run --rm --no-deps api composer install
+
+# chaves ANTES do "up" (o Compose lê o backend\.env na criação do contêiner)
+docker compose run --rm --no-deps api php artisan key:generate
+$chave = "base64:" + (docker compose run --rm --no-deps -T api php -r 'echo base64_encode(random_bytes(32));')
+$arq = Join-Path $PWD "backend\.env"
+$txt = [IO.File]::ReadAllText($arq) -replace '(?m)^BLIND_INDEX_KEY=.*$', "BLIND_INDEX_KEY=$chave"
+[IO.File]::WriteAllText($arq, $txt, (New-Object Text.UTF8Encoding $false))      # UTF-8 sem BOM
+Select-String -Path backend\.env -Pattern '^(APP_KEY|BLIND_INDEX_KEY)='        # as duas devem ter valor
+
 docker compose up -d
 docker compose ps
-
-docker compose exec api php artisan key:generate
 docker compose exec api php artisan migrate:fresh --seed
 
 # front-end (outro terminal PowerShell)
@@ -520,19 +537,20 @@ npm run test:e2e
 
 #### Problemas específicos do Windows
 
-| Sintoma                                                      | Causa                                                    | Solução                                                      |
-| ------------------------------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------ |
-| `error during connect` / `docker daemon is not running`      | Docker Desktop fechado                                   | abra o Docker Desktop e aguarde "Engine running"             |
-| Docker não inicia: virtualização desabilitada                | Hyper-V/WSL2/virtualização desligados                    | habilite a virtualização na BIOS/UEFI e o recurso do Windows (*Plataforma de Máquina Virtual* / *Hyper-V*) |
-| `bad interpreter: /usr/bin/env bash^M` ou `\r: command not found` | CRLF nos arquivos                                        | reclone com `git clone -c core.autocrlf=input ...` ou `git config core.autocrlf input` e `git rm --cached -r . && git reset --hard` (descarta alterações locais) |
-| `npm : ... cannot be loaded because running scripts is disabled` | política de execução do PowerShell                       | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`        |
-| `curl` retorna HTML estranho/erro de parâmetros              | `curl` é apelido do `Invoke-WebRequest`                  | use `curl.exe`                                               |
-| Porta `80`/`443` ocupada                                     | IIS ("World Wide Web Publishing"), Skype, outro servidor | `netstat -ano \| findstr :80`; pare o serviço (`net stop http` ou desative o IIS) |
-| `Filename too long` no `git clone`/`npm ci`                  | caminho longo no Windows                                 | `git config --system core.longpaths true` e clone em um caminho curto (`C:\projetos`) |
-| `permission denied` em `storage/` ou `bootstrap/cache`       | permissões do volume montado                             | só em dev: `docker compose exec -u root api chmod -R 777 storage bootstrap/cache` |
-| `composer install`, testes ou carregamento lentos            | código no NTFS montado em contêiner                      | use o caminho **A** (WSL2, repositório em `~/projetos`)      |
-| `*.localhost` não resolve                                    | resolução de nomes                                       | linha no `hosts` (acima)                                     |
-| Playwright falha ao baixar/abrir o navegador                 | `--with-deps` é para Linux                               | `npx playwright install chromium`                            |
+| Sintoma                                                      | Causa                                                        | Solução                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `error during connect` / `docker daemon is not running`      | Docker Desktop fechado                                       | abra o Docker Desktop e aguarde "Engine running"             |
+| Docker não inicia: virtualização desabilitada                | Hyper-V/WSL2/virtualização desligados                        | habilite a virtualização na BIOS/UEFI e o recurso do Windows (*Plataforma de Máquina Virtual* / *Hyper-V*) |
+| `bad interpreter: /usr/bin/env bash^M` ou `\r: command not found` | CRLF nos arquivos                                            | reclone com `git clone -c core.autocrlf=input ...` ou `git config core.autocrlf input` e `git rm --cached -r . && git reset --hard` (descarta alterações locais) |
+| `npm : ... cannot be loaded because running scripts is disabled` | política de execução do PowerShell                           | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`        |
+| `curl` retorna HTML estranho/erro de parâmetros              | `curl` é apelido do `Invoke-WebRequest`                      | use `curl.exe`                                               |
+| Porta `80`/`443` ocupada                                     | IIS ("World Wide Web Publishing"), Skype, outro servidor     | `netstat -ano \| findstr :80`; pare o serviço (`net stop http` ou desative o IIS) |
+| `npm warn EBADENGINE` e, no `npm run dev`, `Cannot find native binding` / `@rolldown/binding-win32-x64-msvc` | **Node antigo** (ex.: 22.11): o `npm` **pula** o pacote nativo do `rolldown` (dependência opcional) porque a versão do Node é menor que a exigida | atualize o Node (**22.18+ ou 24.12+**), feche o terminal, depois `cd frontend; Remove-Item -Recurse -Force node_modules; npm ci` |
+| `Filename too long` no `git clone`/`npm ci`                  | caminho longo no Windows                                     | `git config --system core.longpaths true` e clone em um caminho curto (`C:\projetos`) |
+| `permission denied` em `storage/` ou `bootstrap/cache`       | permissões do volume montado                                 | só em dev: `docker compose exec -u root api chmod -R 777 storage bootstrap/cache` |
+| `composer install`, testes ou carregamento lentos            | código no NTFS montado em contêiner                          | use o caminho **A** (WSL2, repositório em `~/projetos`)      |
+| `*.localhost` não resolve                                    | resolução de nomes                                           | linha no `hosts` (acima)                                     |
+| Playwright falha ao baixar/abrir o navegador                 | `--with-deps` é para Linux                                   | `npx playwright install chromium`                            |
 
 ---
 
@@ -690,6 +708,14 @@ Na produção local, troque `BASE` por `https://api.sghss.localhost/api/v1` e us
 
 ## 8. Erros comuns e como corrigir
 
+### Front-end (Node/npm)
+
+| Sintoma                                                      | Causa                                                        | Solução                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `npm warn EBADENGINE Unsupported engine` (muitas linhas)     | versão do Node abaixo da exigida (`^22.18 \|\| >=24.12`)     | instale a **LTS atual** do Node e confira `node -v`          |
+| `Cannot find native binding` / `Cannot find module '@rolldown/binding-...'` ao rodar `npm run dev` | mesma causa: com Node antigo o `npm` não instala o binário nativo do `rolldown` (opcional) | atualize o Node; apague `node_modules` e rode `npm ci` (Linux/macOS: `rm -rf node_modules && npm ci`). Só em último caso, `npm install` (não `ci`), e depois `git checkout package-lock.json` |
+| `npm audit` aponta vulnerabilidades *moderate*               | dependências de desenvolvimento                              | não afeta a execução; `npm audit` para detalhes (não use `--force`) |
+
 ### Docker e ambiente
 
 > Usa **Windows puro**? Veja também os problemas específicos em [5.3](#53-windows-com-e-sem-wsl).
@@ -706,12 +732,14 @@ Na produção local, troque `BASE` por `https://api.sghss.localhost/api/v1` e us
 
 ### Banco e dados
 
-| Sintoma                                           | Causa                                                        | Solução                                                      |
-| ------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `password authentication failed for user "sghss"` | `DB_PASSWORD` ≠ `POSTGRES_PASSWORD`, **ou** a senha foi trocada depois de o volume ser criado (o Postgres só lê a senha na 1ª inicialização) | iguale os dois arquivos e, em prod local, `$P down -v && $P up -d --build` |
-| `DemoSeeder não pode rodar em produção`           | proteção intencional                                         | use o comando do passo 5.2 (5) ou o `--seed` do ambiente de dev |
-| Login com 4xx após o seed                         | senha ≠ `DEMO_PASSWORD` do `.env`                            | confira o valor; `php artisan config:clear` após mudar o `.env` |
-| `Defina DEMO_PASSWORD no .env`                    | variável ausente                                             | adicione `DEMO_PASSWORD` em `backend/.env` e rode `config:clear` |
+| Sintoma                                                      | Causa                                                        | Solução                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `password authentication failed for user "sghss"`            | `DB_PASSWORD` ≠ `POSTGRES_PASSWORD`, **ou** a senha foi trocada depois de o volume ser criado (o Postgres só lê a senha na 1ª inicialização) | iguale os dois arquivos e, em prod local, `$P down -v && $P up -d --build` |
+| `No application encryption key has been specified` (`MissingAppKeyException`) ao rodar o `--seed` | `APP_KEY` vazia **dentro do contêiner**: a chave foi gerada/colada **depois** do `up` (o Compose lê o `.env` na criação do contêiner) | confirme `APP_KEY=base64:...` em `backend/.env` e recrie: `docker compose up -d --force-recreate api worker scheduler`; depois `migrate:fresh --seed` |
+| `BLIND_INDEX_KEY não configurada`                            | variável vazia (o `.env.example` vem sem valor)              | gere a chave (passo 2 da seção 5.1) e recrie os contêineres como acima |
+| `DemoSeeder não pode rodar em produção`                      | proteção intencional                                         | use o comando do passo 5.2 (5) ou o `--seed` do ambiente de dev |
+| Login com 4xx após o seed                                    | senha ≠ `DEMO_PASSWORD` do `.env`                            | confira o valor; `php artisan config:clear` após mudar o `.env` |
+| `Defina DEMO_PASSWORD no .env`                               | variável ausente                                             | adicione `DEMO_PASSWORD` em `backend/.env` e rode `config:clear` |
 
 ### Produção local
 
