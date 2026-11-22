@@ -1,0 +1,60 @@
+name: frontend-ci
+on:
+    pull_request:
+    push:
+        branches: [main]
+permissions:
+    contents: read
+concurrency:
+    group: frontend-ci-${{ github.ref }}
+    cancel-in-progress: true
+jobs:
+    quality:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: frontend
+        steps:
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: "lts/*"
+                  cache: npm
+                  cache-dependency-path: frontend/package-lock.json
+            - run: npm ci
+            - name: Vulnerabilidades (produção; falha só em CRÍTICA, ver B-picomatch)
+              run: npm audit --omit=dev --audit-level=critical
+            - run: npm run lint
+            - run: npm run type-check
+            - run: npm run test:unit -- --run
+            - run: npm run build
+
+    e2e:
+        runs-on: ubuntu-latest
+        needs: quality
+        defaults:
+            run:
+                working-directory: frontend
+        steps:
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: "lts/*"
+                  cache: npm
+                  cache-dependency-path: frontend/package-lock.json
+            - run: npm ci
+            - name: Navegador do Playwright
+              run: npx playwright install --with-deps chromium
+            - name: E2E (acessibilidade, responsivo, inatividade, agendamento, CSP)
+              run: npm run test:e2e
+            - name: Evidências (relatório e capturas)
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: e2e-evidencias
+                  path: |
+                      frontend/playwright-report/
+                      frontend/e2e/.resultados/
+                      docs/evidencias/ct040-*.png
+                  if-no-files-found: ignore
+                  retention-days: 14

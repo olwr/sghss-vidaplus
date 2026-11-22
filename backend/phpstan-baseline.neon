@@ -1,0 +1,829 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:registros\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Administracao/Services/AnonimizacaoService.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:tokens\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Administracao/Services/AnonimizacaoService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Agendamentos/Console/EnviarLembretes.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$nome\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Agendamentos/Console/EnviarLembretes.php
+
+		-
+			message: '#^Cannot call method setTimezone\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Agendamentos/Console/EnviarLembretes.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Agendamentos/Http/Resources/AgendaResource.php
+
+		-
+			message: '#^Cannot call method toDateString\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Domains/Agendamentos/Http/Resources/AgendaResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 5
+			path: app/Domains/Agendamentos/Http/Resources/AgendamentoResource.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Domains/Agendamentos/Http/Resources/AgendamentoResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$usuario_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Agendamentos/Policies/AgendaPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$usuario_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Agendamentos/Policies/AgendamentoPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$duracao_atendimento_min\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Agendamentos/Services/AgendamentoService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Agendamentos/Services/AgendamentoService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$nome\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Agendamentos/Services/AgendamentoService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$usuario\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Agendamentos/Services/AgendamentoService.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 5
+			path: app/Domains/Agendamentos/Services/AgendamentoService.php
+
+		-
+			message: '#^Cannot call method diffInMinutes\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Agendamentos/Services/AgendamentoService.php
+
+		-
+			message: '#^Cannot call method setTimezone\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Agendamentos/Services/AgendamentoService.php
+
+		-
+			message: '#^Method App\\Domains\\Agendamentos\\Services\\AgendamentoService\:\:resolverPaciente\(\) should return App\\Domains\\Pacientes\\Models\\Paciente but returns Illuminate\\Database\\Eloquent\\Model\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Domains/Agendamentos/Services/AgendamentoService.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>duracao_atendimento_min" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Domains/Agendamentos/Services/AgendamentoService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Agendamentos/Services/DisponibilidadeService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Domains/Internacoes/Http/Resources/InternacaoResource.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Domains/Internacoes/Http/Resources/InternacaoResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Internacoes/Http/Resources/LeitoResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Internacoes/Services/InternacaoService.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>id" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Domains/Internacoes/Services/InternacaoService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Pacientes/Http/Resources/PacienteResource.php
+
+		-
+			message: '#^Cannot call method toDateString\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Pacientes/Http/Resources/PacienteResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$pivot\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Profissionais/Http/Resources/EquipeResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$tipo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Profissionais/Http/Resources/EquipeResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$usuario\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Profissionais/Http/Resources/EquipeResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Profissionais/Http/Resources/EquipeResource.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Domains/Profissionais/Http/Resources/EquipeResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Profissionais/Http/Resources/ProfissionalResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$nome\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Profissionais/Http/Resources/ProfissionalResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Profissionais/Http/Resources/ProfissionalResource.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:tokens\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Profissionais/Services/ProfissionalService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Controllers/ProntuarioController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$unidade_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Controllers/ProntuarioController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:equipes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Controllers/ProntuarioController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/ExameResource.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:estaDisponivel\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/ExameResource.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Domains/Prontuarios/Http/Resources/ExameResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/ProntuarioResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$dosagem\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/ReceitaResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$duracao\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/ReceitaResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$medicamento\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/ReceitaResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$posologia\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/ReceitaResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$quantidade\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/ReceitaResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Prontuarios/Http/Resources/ReceitaResource.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Domains/Prontuarios/Http/Resources/ReceitaResource.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/ReceitaResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/RegistroClinicoResource.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Prontuarios/Http/Resources/RegistroClinicoResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ExamePolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$unidade_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ExamePolicy.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:equipes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ExamePolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ProntuarioPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$unidade_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ProntuarioPolicy.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:equipes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ProntuarioPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ReceitaPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$unidade_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ReceitaPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$usuario_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ReceitaPolicy.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:equipes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Policies/ReceitaPolicy.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Prontuarios/Services/ExameService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$unidade_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Services/ExameService.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Domains/Prontuarios/Services/ExameService.php
+
+		-
+			message: '#^Method App\\Domains\\Prontuarios\\Services\\ExameService\:\:resultadoAtual\(\) should return App\\Domains\\Prontuarios\\Models\\ResultadoExame\|null but returns Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Domains/Prontuarios/Services/ExameService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Services/ProntuarioService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$unidade_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Services/ProntuarioService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Services/ReceitaService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$unidade_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Services/ReceitaService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Prontuarios/Services/ReceitaService.php
+
+		-
+			message: '#^Access to an undefined property App\\Domains\\Agendamentos\\Models\\Agendamento\:\:\$atendimentos\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Access to an undefined property App\\Domains\\Agendamentos\\Models\\Agendamento\:\:\$mes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Access to an undefined property App\\Domains\\Agendamentos\\Models\\Agendamento\:\:\$receita\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Access to an undefined property App\\Domains\\Agendamentos\\Models\\Agendamento\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Access to an undefined property App\\Domains\\Internacoes\\Models\\Internacao\:\:\$dias_medios\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Access to an undefined property App\\Domains\\Internacoes\\Models\\Internacao\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Access to an undefined property App\\Domains\\Internacoes\\Models\\Leito\:\:\$ocupados\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Access to an undefined property App\\Domains\\Internacoes\\Models\\Leito\:\:\$total\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Domains\\Agendamentos\\Models\\Agendamento\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 2
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Domains\\Internacoes\\Models\\Internacao\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Domains\\Internacoes\\Models\\Leito\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>unidade_id" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Domains/Relatorios/Services/RelatorioService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$acao\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$attribute_changes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$causer\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$event\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$ip\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$ip_address\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$log_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$paciente\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$recurso_tipo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$subject_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$usuario\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 2
+			path: app/Domains/Seguranca/Http/Controllers/AuditoriaController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$concedido_em\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/TitularController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$finalidade\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/TitularController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$revogado_em\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/TitularController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$versao_termo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/TitularController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:estaVigente\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/TitularController.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Domains/Seguranca/Http/Controllers/TitularController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Http/Resources/UsuarioResource.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Seguranca/Http/Resources/UsuarioResource.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>password" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Domains/Seguranca/Services/AuthService.php
+
+		-
+			message: '#^Method App\\Domains\\Seguranca\\Services\\ConsentimentoService\:\:conceder\(\) should return App\\Domains\\Seguranca\\Models\\Consentimento but returns Illuminate\\Database\\Eloquent\\Model\.$#'
+			identifier: return.type
+			count: 2
+			path: app/Domains/Seguranca/Services/ConsentimentoService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$alergias_criptografado\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$concedido_em\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$emitida_em\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$finalidade\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$inicio_em\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$itens\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$nome\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$profissional\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$registros\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$revogado_em\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$tipo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$tipo_sanguineo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$versao_termo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Method App\\Domains\\Seguranca\\Services\\TitularService\:\:pacienteDe\(\) should return App\\Domains\\Pacientes\\Models\\Paciente but returns Illuminate\\Database\\Eloquent\\Model\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 4
+			path: app/Domains/Seguranca/Services/TitularService.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Telemedicina/Http/Controllers/SalaTelemedicinaController.php
+
+		-
+			message: '#^Cannot call method getTimestamp\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Telemedicina/Services/JitsiTokenService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$paciente\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Telemedicina/Services/SalaTelemedicinaService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$profissional\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Domains/Telemedicina/Services/SalaTelemedicinaService.php
+
+		-
+			message: '#^Cannot call method addMinutes\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Telemedicina/Services/SalaTelemedicinaService.php
+
+		-
+			message: '#^Cannot call method subMinutes\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Telemedicina/Services/SalaTelemedicinaService.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$uuid\.$#'
+			identifier: property.notFound
+			count: 4
+			path: app/Domains/Transferencias/Http/Resources/TransferenciaResource.php
+
+		-
+			message: '#^Cannot call method toIso8601String\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Domains/Transferencias/Http/Resources/TransferenciaResource.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:tokens\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Domains/Transferencias/Services/TransferenciaService.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Domains/Unidades/Services/UnidadeService.php

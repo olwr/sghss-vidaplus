@@ -1,0 +1,20 @@
+# Produção rodando NO SEU COMPUTADOR (sem GHCR, sem domínio real). Use com os outros dois arquivos:
+#   docker compose -p sghss-prod -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.prod-local.yml \
+#     --env-file .env.production up -d --build
+# Constrói as imagens de produção localmente e grava a URL LOCAL da API no site (e na CSP dele).
+services:
+  api:
+    image: sghss-api:local
+    build: { context: ./backend, target: prod }
+  worker:
+    image: sghss-api:local
+  scheduler:
+    image: sghss-api:local
+  web:
+    image: sghss-web:local
+    build:
+      context: ./frontend
+      target: prod
+      args:
+        VITE_API_URL: https://${DOMINIO_API}/api/v1
+        VITE_JITSI_DOMAIN: ${JITSI_DOMAIN:-8x8.vc}

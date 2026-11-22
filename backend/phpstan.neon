@@ -1,0 +1,11 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - phpstan-baseline.neon
+parameters:
+    paths: [app, routes, database]
+    level: 5 # subir até 8 ("nível alto" da documentação) de forma gradual
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        - identifier: method.notFound
+          message: '#Call to an undefined method Faker\\Generator::(cpf|cnpj|stateAbbr)\(\)#'
+          path: database/factories/*
