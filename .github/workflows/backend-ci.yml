@@ -39,7 +39,7 @@ jobs:
                   extensions: pdo_pgsql, pgsql, redis, intl, bcmath, zip, gd, pcntl
                   coverage: pcov
             - name: Cache do Composer
-              uses: actions/cache@v4
+              uses: actions/cache@v6
               with:
                   path: ~/.composer/cache
                   key: composer-${{ hashFiles('backend/composer.lock') }}
